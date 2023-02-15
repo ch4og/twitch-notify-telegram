@@ -11,7 +11,7 @@
 
 1. [Twitch Application](https://dev.twitch.tv/console/apps/create)
    - Создать приложение
-2. Создать бота через BotFather в Telegram
+2. [Создать бота через BotFather в Telegram](https://telegram.me/BotFather)
 
 ### `🫖` Переменные в .env
 1. TW_OAUTH
