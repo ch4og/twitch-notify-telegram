@@ -1,0 +1,8 @@
+.env
+config.json
+venv
+.cache
+BUILD.bat
+scripts/
+ndd/
+work/
