@@ -38,7 +38,7 @@ def handle_message(message):
         else:
             bot.reply_to(message, f'Вы не были подписаны.')
     elif (message.text == "Информация о подписке"):
-        if message.chat.id in read_subs():
+        if str(message.chat.id) in read_subs():
             bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы подписаны на уведомления.")
         else:
             bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы не подписаны на уведомления.")
