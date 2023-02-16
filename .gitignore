@@ -6,3 +6,5 @@ BUILD.bat
 scripts/
 ndd/
 work/
+msg.log
+subscribers.json
