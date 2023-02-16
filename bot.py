@@ -49,18 +49,18 @@ def handle_message(message):
             bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
     elif (message.text == "Информация о подписке"):
         if str(message.chat.id) in read_subs():
-            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv(DEV)} \n\nВы подписаны на уведомления.", reply_markup=keyboard)
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv('DEV')} \n\nВы подписаны на уведомления.", reply_markup=keyboard)
         else:
-            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv(DEV)} \n\nВы не подписаны на уведомления.", reply_markup=keyboard)
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv('DEV')} \n\nВы не подписаны на уведомления.", reply_markup=keyboard)
     elif (message.text == "sysi"):
-        if (message.chat.username == os.getenv(DEV)):
+        if (message.chat.username == os.getenv('DEV')):
             with open('msg.log', 'r') as file:
                 logg = file.read()
             bot.reply_to(message, f"online={online}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
             log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
-         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv(DEV)}', reply_markup=keyboard)
+         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv('DEV')}', reply_markup=keyboard)
          log(f"?{message.chat.username} - {message.text} ({message.chat.id})")
          
 def check_stream_status():
