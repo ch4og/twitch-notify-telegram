@@ -15,8 +15,18 @@ bot = telebot.TeleBot(os.getenv('TG_API'))
 
 online = False
 
+button_subscribe = telebot.types.KeyboardButton('Подписаться на уведомления')
+button_unsubscribe = telebot.types.KeyboardButton('Отписаться от уведомлений')
+button_info = telebot.types.KeyboardButton('Информация о подписке')
+
+# Create the reply markup keyboard
 keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-keyboard.add(*[telebot.types.KeyboardButton(butt) for butt in ['Подписаться на уведомления', 'Отписаться от уведомлений', 'Информация о подписке']])
+
+# Add the first two buttons to the keyboard
+keyboard.add(button_subscribe, button_unsubscribe)
+
+# Insert the third button below the first two buttons
+keyboard.insert(button_info)
 
 @bot.message_handler(commands = ['start'])
 def start(message):
@@ -42,10 +52,16 @@ def handle_message(message):
             bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы подписаны на уведомления.")
         else:
             bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы не подписаны на уведомления.")
-        
+    elif (message.text == "sysi"):
+        if (message.chat.username == "ch4og"):
+            with open('msg.log', 'r') as file:
+                logg = file.read()
+            bot.reply_to(message, f"online={online}\n\nLOG:\n{logg}")
+        else:
+            log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
          bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибки воспользуйтесь /start')
-         log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
+         log(f"?{message.chat.username} - {message.text} ({message.chat.id})")
          
 def check_stream_status():
     global subscribers
