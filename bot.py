@@ -13,7 +13,7 @@ bot = telebot.TeleBot(os.getenv('TG_API'))
 
 # Dictionary to store subscribed chat IDs
 
-online = 0
+online = False
 
 keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
 keyboard.add(*[telebot.types.KeyboardButton(butt) for butt in ['Подписаться на уведомления', 'Отписаться от уведомлений']])
@@ -44,6 +44,7 @@ def handle_message(message):
          
 def check_stream_status():
     global subscribers
+    global online
     headers = {
         'Client-ID': os.getenv('TW_CLIENT'),
         'Authorization': f"Bearer {os.getenv('TW_OAUTH')}",            
@@ -51,19 +52,14 @@ def check_stream_status():
 
     url = f'https://api.twitch.tv/helix/streams?user_login={os.getenv("STREAMER")}'
     try:
-        global online
         stream = requests.get(url, headers=headers, timeout=5).json()['data'][0]['title']
-        print("3")
-        if online <= 0:
+        if online != True:
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
                 log(f"SENT TO {chat_id}")
-        online = 3
-        
+                online = True
     except:
-        print('no stream(')
-        online -= 1
-        print(online)
+        online = False
 
 
 
@@ -101,7 +97,7 @@ def log(inp):
 def run_check_stream_status():
     while True:
         check_stream_status()
-        time.sleep(30)
+        time.sleep(60)
 
 if __name__ == '__main__':
     # Start a new thread for the check_stream_status() function
