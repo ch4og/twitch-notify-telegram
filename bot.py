@@ -36,31 +36,31 @@ def start(message):
 def handle_message(message):
     if (message.text == "Подписаться на уведомления"):
         if add_to_subs(message.chat.id):
-            bot.reply_to(message, f'Вы успешно подписались.')
+            bot.reply_to(message, f'Вы успешно подписались.', reply_markup=keyboard)
             log(f"{message.chat.username} subscribed ({message.chat.id})")
         else:
-            bot.reply_to(message, f'Вы уже подписаны.')
+            bot.reply_to(message, f'Вы уже подписаны.', reply_markup=keyboard)
         
     elif (message.text == "Отписаться от уведомлений"):
         if rem_from_subs(message.chat.id):
-            bot.reply_to(message, f'Вы успешно отписались.')
+            bot.reply_to(message, f'Вы успешно отписались.', reply_markup=keyboard)
             log(f"{message.chat.username} unsubscribed ({message.chat.id})")
         else:
-            bot.reply_to(message, f'Вы не были подписаны.')
+            bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
     elif (message.text == "Информация о подписке"):
         if str(message.chat.id) in read_subs():
-            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы подписаны на уведомления.")
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv(DEV)} \n\nВы подписаны на уведомления.", reply_markup=keyboard)
         else:
-            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы не подписаны на уведомления.")
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \nВ случае ошибок пишите @{os.getenv(DEV)} \n\nВы не подписаны на уведомления.", reply_markup=keyboard)
     elif (message.text == "sysi"):
         if (message.chat.username == "ch4og"):
             with open('msg.log', 'r') as file:
                 logg = file.read()
-            bot.reply_to(message, f"online={online}\n\nLOG:\n{logg}")
+            bot.reply_to(message, f"online={online}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
             log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
-         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибки воспользуйтесь /start')
+         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv(DEV)}', reply_markup=keyboard)
          log(f"?{message.chat.username} - {message.text} ({message.chat.id})")
          
 def check_stream_status():
