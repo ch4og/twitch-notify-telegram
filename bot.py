@@ -60,7 +60,7 @@ def handle_message(message):
         else:
             log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
-         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv('DEV')}', reply_markup=keyboard)
+         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv("DEV")}', reply_markup=keyboard)
          log(f"?{message.chat.username} - {message.text} ({message.chat.id})")
          
 def check_stream_status():
