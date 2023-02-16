@@ -16,7 +16,7 @@ bot = telebot.TeleBot(os.getenv('TG_API'))
 online = False
 
 keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-keyboard.add(*[telebot.types.KeyboardButton(butt) for butt in ['Подписаться на уведомления', 'Отписаться от уведомлений']])
+keyboard.add(*[telebot.types.KeyboardButton(butt) for butt in ['Подписаться на уведомления', 'Отписаться от уведомлений', 'Информация о подписке']])
 
 @bot.message_handler(commands = ['start'])
 def start(message):
@@ -37,6 +37,11 @@ def handle_message(message):
             log(f"{message.chat.username} unsubscribed ({message.chat.id})")
         else:
             bot.reply_to(message, f'Вы не были подписаны.')
+    elif (message.text == "Информация о подписке"):
+        if message.chat.id in read_subs():
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы подписаны на уведомления.")
+        else:
+            bot.reply_to(message, f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда {os.getenv('STREAMER')} запускает стрим. \n\nВы не подписаны на уведомления.")
         
     else:
          bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибки воспользуйтесь /start')
