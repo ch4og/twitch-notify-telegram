@@ -20,13 +20,13 @@ button_unsubscribe = telebot.types.KeyboardButton('Отписаться от у�
 button_info = telebot.types.KeyboardButton('Информация о подписке')
 
 # Create the reply markup keyboard
-keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 
 # Add the first two buttons to the keyboard
 keyboard.add(button_subscribe, button_unsubscribe)
 
-# Insert the third button below the first two buttons
-keyboard.insert(button_info)
+# Add the third button to the row below
+keyboard.add(button_info)
 
 @bot.message_handler(commands = ['start'])
 def start(message):
