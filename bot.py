@@ -41,14 +41,14 @@ def handle_message(message):
     if (message.text == "Подписаться на уведомления"):
         if add_to_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно подписались.', reply_markup=keyboard)
-            log(f"{message.chat.username} subscribed ({message.chat.id})")
+            log(f"{message.chat.username} subscribed")
         else:
             bot.reply_to(message, f'Вы уже подписаны.', reply_markup=keyboard)
         
     elif (message.text == "Отписаться от уведомлений"):
         if rem_from_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно отписались.', reply_markup=keyboard)
-            log(f"{message.chat.username} unsubscribed ({message.chat.id})")
+            log(f"{message.chat.username} unsubscribed")
         else:
             bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
     elif (message.text == "Информация о подписке"):
@@ -64,12 +64,12 @@ def handle_message(message):
                 logg = file.read()
             for chat_id in read_subs():
                 users.append("@"+bot.get_chat(chat_id).username)   
-            bot.reply_to(message, f"online={online}\n\nSUBS:\n{users}\n\nLOG:\n{logg}", reply_markup=keyboard)
+            bot.reply_to(message, f"online={online}\n\nSUBS:\n{' '.join(users)}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
-            log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
+            log(f"!!!{message.chat.username} - {message.text}")
     else:
          bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv("DEV")}', reply_markup=keyboard)
-         log(f"?{message.chat.username} - {message.text} ({message.chat.id})")
+         log(f"?{message.chat.username} - {message.text}")
          
 def check_stream_status():
     global subscribers
@@ -86,7 +86,7 @@ def check_stream_status():
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
                 user = bot.get_chat(chat_id).username
-                log(f"SENT TO {user} ({chat_id})")
+                log(f"SENT TO {user}")
                 online = True
     except:
         online = False
