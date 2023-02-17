@@ -73,8 +73,9 @@ def handle_message(message):
                 log(f"!!!{message.chat.username} - {message.text}")
             except:
                 log(f"!!!{message.chat.id} - {message.text}")
+            bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки.', reply_markup=keyboard)
     else:
-        bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv("DEV")}', reply_markup=keyboard)
+        bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки.', reply_markup=keyboard)
         try:
             log(f"?{message.chat.username} - {message.text}")
         except:
