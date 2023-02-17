@@ -11,9 +11,6 @@ load_dotenv()
 
 bot = telebot.TeleBot(os.getenv('TG_API'))
 
-#!!!! ALL USERNAMES CODE IS UNSAFE FIX IT ASAP
-# check if username exist before puting in str!!!!
-
 online = False
 
 button_subscribe = telebot.types.KeyboardButton('Подписаться на уведомления')
@@ -38,14 +35,20 @@ def handle_message(message):
     if (message.text == "Подписаться на уведомления"):
         if add_to_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно подписались.', reply_markup=keyboard)
-            log(f"{message.chat.username} subscribed")
+            try:
+                log(f"{message.chat.username} subscribed")
+            except:
+                log(f"{message.chat.id} subscribed")
         else:
             bot.reply_to(message, f'Вы уже подписаны.', reply_markup=keyboard)
         
     elif (message.text == "Отписаться от уведомлений"):
         if rem_from_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно отписались.', reply_markup=keyboard)
-            log(f"{message.chat.username} unsubscribed")
+            try:
+                log(f"{message.chat.username} unsubscribed")
+            except:
+                log(f"{message.chat.id} unsubscribed")
         else:
             bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
     elif (message.text == "Информация о подписке"):
@@ -60,13 +63,22 @@ def handle_message(message):
             with open('msg.log', 'r') as file:
                 logg = file.read()
             for chat_id in read_subs():
-                users.append("@"+bot.get_chat(chat_id).username)   
+                try:
+                    users.append("@"+bot.get_chat(chat_id).username)   
+                except:
+                    users.append(f"[@{chat_id}](tg://user?id={chat_id})")
             bot.reply_to(message, f"online={online}\n\nSUBS:\n{' '.join(users)}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
-            log(f"!!!{message.chat.username} - {message.text}")
+            try:
+                log(f"!!!{message.chat.username} - {message.text}")
+            except:
+                log(f"!!!{message.chat.id} - {message.text}")
     else:
-         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv("DEV")}', reply_markup=keyboard)
-         log(f"?{message.chat.username} - {message.text}")
+        bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки. В случае ошибок пишите @{os.getenv("DEV")}', reply_markup=keyboard)
+        try:
+            log(f"?{message.chat.username} - {message.text}")
+        except:
+            log(f"?{message.chat.id} - {message.text}")
          
 def check_stream_status():
     global subscribers
@@ -82,8 +94,11 @@ def check_stream_status():
         if online != True:
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
-                user = bot.get_chat(chat_id).username
-                log(f"SENT TO {user}")
+                try:
+                    username = bot.get_chat(chat_id).username
+                    log(f"SENT TO {username}")
+                except:
+                    log(f"SENT TO {chat_id}")
                 online = True
     except:
         online = False
@@ -124,7 +139,10 @@ def log(inp):
 def run_check_stream_status():
     while True:
         check_stream_status()
-        time.sleep(60)
+        if online:
+            time.sleep(1800)
+        else:
+            time.sleep(60)
 
 if __name__ == '__main__':
     # Start a new thread for the check_stream_status() function
