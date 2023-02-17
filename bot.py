@@ -52,11 +52,11 @@ def handle_message(message):
         else:
             bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
     elif (message.text == "Информация о подписке"):
-        sample = f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда [{os.getenv('STREAMER')}]({os.getenv('LINK')}) запускает стрим. \nВ случае ошибок пишите @{os.getenv('DEV')} \n\n"
+        sample = f"Подписавшись на уведомления вы будете получать сообщения каждый раз когда [{os.getenv('STREAMER')}]({os.getenv('LINK')}) запускает стрим. \nВ случае ошибок пишите @{os.getenv('DEV')}"
         if str(message.chat.id) in read_subs():
-            bot.reply_to(message, f"{sample}Вы подписаны на уведомления.", parse_mode='Markdown', reply_markup=keyboard)
+            bot.reply_to(message, f"**Вы подписаны на уведомления.** \n\n{sample}", parse_mode='Markdown', reply_markup=keyboard)
         else:
-            bot.reply_to(message, f"{sample}Вы не подписаны на уведомления.", parse_mode='Markdown', reply_markup=keyboard)
+            bot.reply_to(message, f"**Вы не подписаны на уведомления.** \n\n{sample}", parse_mode='Markdown', reply_markup=keyboard)
     elif (message.text == "sysi"):
         if (message.chat.username == os.getenv('DEV')):
             users = []
