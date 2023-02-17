@@ -59,9 +59,12 @@ def handle_message(message):
             bot.reply_to(message, f"{sample}Вы не подписаны на уведомления.", parse_mode='Markdown', reply_markup=keyboard)
     elif (message.text == "sysi"):
         if (message.chat.username == os.getenv('DEV')):
+            users = []
             with open('msg.log', 'r') as file:
                 logg = file.read()
-            bot.reply_to(message, f"online={online}\n\nSUBS:\n{read_subs()}\n\nLOG:\n{logg}", reply_markup=keyboard)
+            for chat_id in read_subs():
+                users.append("@"+bot.get_chat(chat_id).username)   
+            bot.reply_to(message, f"online={online}\n\nSUBS:\n{users}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
             log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
