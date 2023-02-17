@@ -78,7 +78,8 @@ def check_stream_status():
         if online != True:
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
-                log(f"SENT TO {chat_id}")
+                user = bot.get_chat(chat_id).username
+                log(f"SENT TO {user} ({chat_id})")
                 online = True
     except:
         online = False
