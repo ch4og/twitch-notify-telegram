@@ -57,7 +57,7 @@ def handle_message(message):
         if (message.chat.username == os.getenv('DEV')):
             with open('msg.log', 'r') as file:
                 logg = file.read()
-            bot.reply_to(message, f"online={online}\n\nLOG:\n{logg}", reply_markup=keyboard)
+            bot.reply_to(message, f"online={online}\n\nSUBS:\n{read_subs()}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
             log(f"!!!{message.chat.username} - {message.text} ({message.chat.id})")
     else:
