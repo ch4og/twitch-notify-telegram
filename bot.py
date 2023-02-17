@@ -12,6 +12,10 @@ load_dotenv()
 bot = telebot.TeleBot(os.getenv('TG_API'))
 
 # Dictionary to store subscribed chat IDs
+#!!!! ALL USERNAMES CODE IS UNSAFE FIX IT ASAP
+# check is username exist before puting in str!!!!
+#!!!! ALL USERNAMES CODE IS UNSAFE FIX IT ASAP
+# check is username exist before puting in str!!!!
 
 online = False
 
