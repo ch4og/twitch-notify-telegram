@@ -35,9 +35,9 @@ def handle_message(message):
     if (message.text == "Подписаться на уведомления"):
         if add_to_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно подписались.', reply_markup=keyboard)
-            try:
+            if message.chat.username:
                 log(f"{message.chat.username} subscribed")
-            except:
+            else:
                 log(f"{message.chat.id} subscribed")
         else:
             bot.reply_to(message, f'Вы уже подписаны.', reply_markup=keyboard)
@@ -45,9 +45,9 @@ def handle_message(message):
     elif (message.text == "Отписаться от уведомлений"):
         if rem_from_subs(message.chat.id):
             bot.reply_to(message, f'Вы успешно отписались.', reply_markup=keyboard)
-            try:
+            if message.chat.username:
                 log(f"{message.chat.username} unsubscribed")
-            except:
+            else:
                 log(f"{message.chat.id} unsubscribed")
         else:
             bot.reply_to(message, f'Вы не были подписаны.', reply_markup=keyboard)
@@ -63,22 +63,22 @@ def handle_message(message):
             with open('msg.log', 'r') as file:
                 logg = file.read()
             for chat_id in read_subs():
-                try:
+                if message.chat.username:
                     users.append("@"+bot.get_chat(chat_id).username)   
-                except:
+                else:
                     users.append(f"[@{chat_id}](tg://user?id={chat_id})")
             bot.reply_to(message, f"online={online}\n\nSUBS:\n{' '.join(users)}\n\nLOG:\n{logg}", reply_markup=keyboard)
         else:
-            try:
+            if message.chat.username:
                 log(f"!!!{message.chat.username} - {message.text}")
-            except:
+            else:
                 log(f"!!!{message.chat.id} - {message.text}")
             bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки.', reply_markup=keyboard)
     else:
         bot.reply_to(message, f'Извините, я вас не понял, используйте кнопки.', reply_markup=keyboard)
-        try:
+        if message.chat.username:
             log(f"?{message.chat.username} - {message.text}")
-        except:
+        else:
             log(f"?{message.chat.id} - {message.text}")
          
 def check_stream_status():
@@ -95,10 +95,10 @@ def check_stream_status():
         if online != True:
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
-                try:
-                    username = bot.get_chat(chat_id).username
+                username = bot.get_chat(chat_id).username
+                if username:
                     log(f"SENT TO {username}")
-                except:
+                else:
                     log(f"SENT TO {chat_id}")
                 online = True
     except:
