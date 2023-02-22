@@ -91,7 +91,7 @@ def check_stream_status():
 
     url = f'https://api.twitch.tv/helix/streams?user_login={os.getenv("STREAMER")}'
     try:
-        stream = requests.get(url, headers=headers, timeout=5).json()['data'][0]['title']
+        stream = requests.get(url, headers=headers, timeout=15).json()['data'][0]['title']
         if online != True:
             for chat_id in read_subs():
                 bot.send_message(chat_id, f'{os.getenv("STREAMER")} запустил стрим!\n{stream}\n\nhttps://www.twitch.tv/{os.getenv("STREAMER")}\nhttps://www.twitch.tv/{os.getenv("STREAMER")}')
