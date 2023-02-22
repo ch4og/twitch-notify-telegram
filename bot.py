@@ -8,10 +8,11 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-
-bot = telebot.TeleBot(os.getenv('TG_API'), timeout=60)
-
+session = requests.Session()
+bot = telebot.TeleBot(os.getenv('TG_API'))
+session.timeout = 60
 online = False
+bot.session = session
 
 button_subscribe = telebot.types.KeyboardButton('Подписаться на уведомления')
 button_unsubscribe = telebot.types.KeyboardButton('Отписаться от уведомлений')
