@@ -193,7 +193,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
     setTimeout(() => {
       setInterval(() => {
         checkStreamStatus();
-      }, 1 * 1000); //60 !!!!!
+      }, 60 * 1000); 
     }, 0);
   };
   runCheckStreamStatus();
