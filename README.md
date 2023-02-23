@@ -2,16 +2,27 @@
 
 #### Telegram бот на ~Python~ NodeJS для уведомления зрителей о начавшемся стриме на Twitch. 
 
-
-
-1. [Twitch Application](https://dev.twitch.tv/console/apps/create)
-   - Создать приложение
+1. [Создать приложение Twitch Application](https://dev.twitch.tv/console/apps/create)
 2. [Создать бота через BotFather в Telegram](https://telegram.me/BotFather)
 
-#### Переменные в .env
-1. TW_OAUTH
-2. TW_CLIENT
-3. STREAMER
-4. TG_API
-5. DEV
-6. LINK
+3. ```git clone https://github.com/ch4og/twitch-notify-telegram```
+
+4. ```cd twitch-notify-telegram```
+
+5. ```npm i```
+
+6. ```touch msg.log```
+
+7. ```echo "{}" > subscibers.json```
+
+8. отредактировать .env 
+
+- TW_OAUTH ```(Twitch Secret)```
+- TW_CLIENT 
+- STREAMER 
+- TG_API 
+- DEV ```(Я использую свой юзернейм тг для команды отладки)```
+- LINK ```(Я использую ссылку на тг канал стримера)```
+
+9. Использовать любой способ запуска node скрипта
+- Например ```node ./app.js``` или ```pm2 start ./app.js```
