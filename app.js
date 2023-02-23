@@ -66,7 +66,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         break;
       case 'Информация о подписке':
         const subs = readSubs();
-        const infoText = Object.keys(subs).includes(chatId.toString()) ? "*Вы __подписаны__ на уведомления.*" : "*Вы _не подписаны_ на уведомления.*";
+        const infoText = Object.keys(subs).includes(chatId.toString()) ? "*Вы ^_подписаны_* на уведомления.*" : "*Вы _не подписаны_ на уведомления.*";
         sample = `Подписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.\n\n${infoText}\n\nВ случае ошибок пишите @${dev}`
         bot.sendMessage(chatId, sample, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
