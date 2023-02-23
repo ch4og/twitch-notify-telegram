@@ -1,10 +1,10 @@
 ## `🔔`  SimpleTwitchNotifyForTelegram
 
-#### Telegram бот на Python для уведомления зрителей о начавшемся стриме на Twitch. 
+#### Telegram бот на ~Python~ NodeJS для уведомления зрителей о начавшемся стриме на Twitch. 
 
 ## `💻` Требования
 
-1. Python
+1. NodeJS
 2. Бот в Telegram
 
 ### `✨` Необходимо
