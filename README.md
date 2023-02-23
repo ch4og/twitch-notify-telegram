@@ -13,7 +13,7 @@
 
 6. ```touch msg.log```
 
-7. ```echo "{}" > subscibers.json```
+7. ```echo "{}" > subscribers.json```
 
 8. отредактировать .env 
 
