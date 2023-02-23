@@ -1,0 +1,10 @@
+.env
+config.json
+venv
+.cache
+BUILD.bat
+scripts/
+ndd/
+work/
+msg.log
+subscribers.json
