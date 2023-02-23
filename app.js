@@ -3,7 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
 require('dotenv').config();
-//
+
 const subscribers = require('./subscribers.json');
 let online = false;
 const tw_cli = process.env.TW_CLIENT;
