@@ -8,3 +8,6 @@ ndd/
 work/
 msg.log
 subscribers.json
+bot.py
+package-lock.json
+node_modules/
