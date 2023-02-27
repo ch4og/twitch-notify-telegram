@@ -28,7 +28,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
       case '/start':
         bot.sendMessage(chatId, `Привет!\nЭто бот для уведомлений о стримах на канале ${streamer}!`, {
           reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-          reply_to_message_id: msg.message_id,
+          
         });
         break;
 
@@ -38,12 +38,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
           log(`${uss} subscribed`);
           bot.sendMessage(chatId, `Вы успешно подписались.`, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            reply_to_message_id: msg.message_id,
+            
           });
         } else {
             bot.sendMessage(chatId, `Вы уже подписаны.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                reply_to_message_id: msg.message_id,
+                
               });
           }
           break;
@@ -55,12 +55,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
             log(`${uss} unsubscribed`);
             bot.sendMessage(chatId, `Вы успешно отписались.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                reply_to_message_id: msg.message_id,
+                
               });
         } else {
             bot.sendMessage(chatId, `Вы не были подписаны.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                reply_to_message_id: msg.message_id,
+                
               });
         }
         break;
@@ -70,7 +70,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         sample = infoText + `\n\nПодписавшись на уведомления вы будете получать сообщения каждый раз когда <a href="${link}">${streamer}</a> запускает стрим. \nВ случае ошибок пишите @${dev}`
         bot.sendMessage(chatId, sample, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            reply_to_message_id: msg.message_id,
+            
             parse_mode: 'HTML'
           }); 
           break;
@@ -91,7 +91,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
               msg = `online=${online}\n\nSUBS:\n${users.join(' ')}\n\nLOG:\n${log}`
               bot.sendMessage(chatId, msg, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                reply_to_message_id: msg.message_id,
+                
                 parse_mode: 'HTML'
               });
             } else{
