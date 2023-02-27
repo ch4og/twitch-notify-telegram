@@ -28,23 +28,22 @@ const bot = new TelegramBot(tg_api, { polling: true });
       case '/start':
         bot.sendMessage(chatId, `Привет!\nЭто бот для уведомлений о стримах на канале ${streamer}!`, {
           reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-          
+          reply_to_message_id: msg.message_id,
         });
         break;
 
       case 'Подписаться на уведомления':
-        if (addToSubs(chatId, msg.from.username || "nooagainuserid"+chatId)){
-          console.log("trying to get that name");  
-          uss = getUname(chatId, msg.from.username);
+        if (addToSubs(chatId, msg.from.username || "nooagainuserid"+chatId)){//
+            uss = getUname(chatId, msg.from.username);
           log(`${uss} subscribed`);
           bot.sendMessage(chatId, `Вы успешно подписались.`, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            
+            reply_to_message_id: msg.message_id,
           });
         } else {
             bot.sendMessage(chatId, `Вы уже подписаны.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                
+                reply_to_message_id: msg.message_id,
               });
           }
           break;
@@ -56,23 +55,23 @@ const bot = new TelegramBot(tg_api, { polling: true });
             log(`${uss} unsubscribed`);
             bot.sendMessage(chatId, `Вы успешно отписались.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                
+                reply_to_message_id: msg.message_id,
               });
         } else {
             bot.sendMessage(chatId, `Вы не были подписаны.`, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                
+                reply_to_message_id: msg.message_id,
               });
         }
         break;
       case 'Информация о подписке':
         const subs = readSubs();
-        const infoText = Object.keys(subs).includes(chatId.toString()) ? "<b>Вы подписаны на уведомления.</b>" : "<b>Вы не подписаны на уведомления.</b>";
-        sample = infoText + `\n\nПодписавшись на уведомления вы будете получать сообщения каждый раз когда <a href="${link}">${streamer}</a> запускает стрим. \nВ случае ошибок пишите @${dev}`
+        const infoText = Object.keys(subs).includes(chatId.toString()) ? "Вы *подписаны* на уведомления." : "Вы *не подписаны* на уведомления.";
+        sample = `Подписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.\n\n${infoText}\n\nВ случае ошибок пишите @${dev}`
         bot.sendMessage(chatId, sample, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            
-            parse_mode: 'HTML'
+            reply_to_message_id: msg.message_id,
+            parse_mode: 'Markdown'
           }); 
           break;
       case 'sysi':
@@ -84,7 +83,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             for (let name in uss){
                 if (uss[name].includes("nooagainuserid")){
                     let ass = uss[name].replace('nooagainuserid', '')
-                    users.push(`<a href="tg://user?id=${ass}">${ass}</a>`)
+                    users.push(`[${ass}](tg://user?id=${ass})`)
                 } else {
                     users.push(`@${uss[name]}`)
                 }
@@ -92,8 +91,8 @@ const bot = new TelegramBot(tg_api, { polling: true });
               msg = `online=${online}\n\nSUBS:\n${users.join(' ')}\n\nLOG:\n${log}`
               bot.sendMessage(chatId, msg, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                
-                parse_mode: 'HTML'
+                reply_to_message_id: msg.message_id,
+                parse_mode: 'Markdown'
               });
             } else{
                 
@@ -105,7 +104,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
       default:
         bot.sendMessage(chatId, 'Извините, я вас не понял, используйте кнопки.', {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            
+            reply_to_message_id: msg.message_id
         });
         
         uss = getUname(chatId, msg.from.username);
@@ -131,7 +130,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         const streamTitle = response.data.data[0].title;
         for (const irs in subs) {
           chatId = subs[irs]
-          bot.sendMessage(chatId, `<b>${streamer} запустил стрим!</b>\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'HTML'});
+          bot.sendMessage(chatId, `*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
           const username = Object.values(readSubs())[irs]
           console.log(username)
           nameee = getUname(chatId, username);
@@ -157,7 +156,6 @@ const bot = new TelegramBot(tg_api, { polling: true });
   
   const addToSubs = (chatId, subscriber) => {
     chatId = chatId.toString();
-    log(chatId)
     const subscribers = readSubs();
     if (!(chatId in subscribers)) {
       subscribers[chatId] = subscriber;
@@ -181,14 +179,13 @@ const bot = new TelegramBot(tg_api, { polling: true });
   };
   const getUname = (id, name) =>{
     if (name != undefined){
-        log(`sooooo our fckin' name is ${name}`)
         return "@"+name
     }else{
     
-    return `${id}`
+    return `[${id}](tg://user?id=${id})`
 }
   }
-  const log = message => {s
+  const log = message => {
     fs.appendFileSync('msg.log', message + '\n');
   };  
 
