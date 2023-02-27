@@ -182,7 +182,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         return "@"+name
     }else{
     
-    return `[${id}](tg://user?id=${id})`
+    return `<a href="tg://user?id=${id}">${id}</a>` // 
 }
   }
   const log = message => {
