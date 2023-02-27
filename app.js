@@ -5,7 +5,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 const subscribers = require('./subscribers.json');
-let online = false;
+let online = true;
 const tw_cli = process.env.TW_CLIENT;
 const tw_key = process.env.TW_OAUTH;
 const streamer = process.env.STREAMER;
