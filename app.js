@@ -130,11 +130,21 @@ const bot = new TelegramBot(tg_api, { polling: true });
         const streamTitle = response.data.data[0].title;
         for (const irs in subs) {
           chatId = subs[irs]
-          bot.sendMessage(chatId, `*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
-          const username = Object.values(readSubs())[irs]
-          console.log(username)
-          nameee = getUname(chatId, username);
-          log(`SENT TO ${nameee}`)
+          if (chatId.toString != "1033428469"){
+            bot.sendMessage(chatId, `*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
+            const username = Object.values(readSubs())[irs]
+            console.log(username)
+            nameee = getUname(chatId, username);
+            log(`SENT TO ${nameee}`)
+          }else{
+            bot.sendMessage(chatId, `*Пиццаед за баллами!!!!*\n\n*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
+            const username = Object.values(readSubs())[irs]
+            console.log(username)
+            nameee = getUname(chatId, username);
+            log(`SENT TO PIZZAED ${nameee}`)
+          
+          }
+
         }
         online = true;
       }
@@ -182,7 +192,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         return "@"+name
     }else{
     
-    return `<a href="tg://user?id=${id}">${id}</a>` // 
+    return `<a href="tg://user?id=${id}">${id}</a>` 
 }
   }
   const log = message => {
