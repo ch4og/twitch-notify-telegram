@@ -3,7 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
 require('dotenv').config();
-//
+
 const subscribers = require('./subscribers.json');
 let online = false;
 const tw_cli = process.env.TW_CLIENT;
@@ -27,7 +27,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
     switch (messageText) {
       case '/start':
         bot.sendMessage(chatId, `Привет!\nЭто бот для уведомлений о стримах на канале ${streamer}!`, {
-          reply_markup: { keyboard },
+          reply_markup: { keyboard: keyboard, resize_keyboard: true, },
           reply_to_message_id: msg.message_id,
         });
         break;
@@ -37,12 +37,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
             uss = getUname(chatId, msg.from.username);
           log(`${uss} subscribed`);
           bot.sendMessage(chatId, `Вы успешно подписались.`, {
-            reply_markup: { keyboard },
+            reply_markup: { keyboard: keyboard, resize_keyboard: true, },
             reply_to_message_id: msg.message_id,
           });
         } else {
             bot.sendMessage(chatId, `Вы уже подписаны.`, {
-                reply_markup: { keyboard },
+                reply_markup: { keyboard: keyboard, resize_keyboard: true, },
                 reply_to_message_id: msg.message_id,
               });
           }
@@ -54,12 +54,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
             uss = getUname(chatId, msg.from.username);
             log(`${uss} unsubscribed`);
             bot.sendMessage(chatId, `Вы успешно отписались.`, {
-                reply_markup: { keyboard },
+                reply_markup: { keyboard: keyboard, resize_keyboard: true, },
                 reply_to_message_id: msg.message_id,
               });
         } else {
             bot.sendMessage(chatId, `Вы не были подписаны.`, {
-                reply_markup: { keyboard },
+                reply_markup: { keyboard: keyboard, resize_keyboard: true, },
                 reply_to_message_id: msg.message_id,
               });
         }
@@ -69,7 +69,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         const infoText = Object.keys(subs).includes(chatId.toString()) ? "<b>Вы подписаны на уведомления.</b>" : "<b>Вы не подписаны на уведомления.</b>";
         sample = infoText + `\n\nПодписавшись на уведомления вы будете получать сообщения каждый раз когда <a href="${link}">${streamer}</a> запускает стрим. \nВ случае ошибок пишите @${dev}`
         bot.sendMessage(chatId, sample, {
-            reply_markup: { keyboard },
+            reply_markup: { keyboard: keyboard, resize_keyboard: true, },
             reply_to_message_id: msg.message_id,
             parse_mode: 'HTML'
           }); 
@@ -90,7 +90,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             }
               msg = `online=${online}\n\nSUBS:\n${users.join(' ')}\n\nLOG:\n${log}`
               bot.sendMessage(chatId, msg, {
-                reply_markup: { keyboard },
+                reply_markup: { keyboard: keyboard, resize_keyboard: true, },
                 reply_to_message_id: msg.message_id,
                 parse_mode: 'HTML'
               });
@@ -103,7 +103,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
 
       default:
         bot.sendMessage(chatId, 'Извините, я вас не понял, используйте кнопки.', {
-            reply_markup: { keyboard },
+            reply_markup: { keyboard: keyboard, resize_keyboard: true, },
             reply_to_message_id: msg.message_id
         });
         
@@ -193,7 +193,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
     setTimeout(() => {
       setInterval(() => {
         checkStreamStatus();
-      }, 60 * 1000); //60 !!!!!
+      }, 60 * 1000); 
     }, 0);
   };
   runCheckStreamStatus();
