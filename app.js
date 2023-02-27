@@ -34,7 +34,8 @@ const bot = new TelegramBot(tg_api, { polling: true });
 
       case 'Подписаться на уведомления':
         if (addToSubs(chatId, msg.from.username || "nooagainuserid"+chatId)){//
-            uss = getUname(chatId, msg.from.username);
+          log("trying to get that name");  
+          uss = getUname(chatId, msg.from.username);
           log(`${uss} subscribed`);
           bot.sendMessage(chatId, `Вы успешно подписались.`, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
