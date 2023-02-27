@@ -179,6 +179,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
   };
   const getUname = (id, name) =>{
     if (name != undefined){
+        log(`sooooo our fckin' name is ${name}`)
         return "@"+name
     }else{
     
