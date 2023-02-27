@@ -33,7 +33,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         break;
 
       case 'Подписаться на уведомления':
-        if (addToSubs(chatId, msg.from.username || "nooagainuserid"+chatId)){//
+        if (addToSubs(chatId, msg.from.username || "nooagainuserid"+chatId)){
           console.log("trying to get that name");  
           uss = getUname(chatId, msg.from.username);
           log(`${uss} subscribed`);
@@ -157,6 +157,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
   
   const addToSubs = (chatId, subscriber) => {
     chatId = chatId.toString();
+    log(chatId)
     const subscribers = readSubs();
     if (!(chatId in subscribers)) {
       subscribers[chatId] = subscriber;
