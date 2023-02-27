@@ -83,7 +83,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             for (let name in uss){
                 if (uss[name].includes("nooagainuserid")){
                     let ass = uss[name].replace('nooagainuserid', '')
-                    users.push(`[${ass}](tg://user?id=${ass})`)
+                    users.push(`<a href="tg://user?id=${ass}">${ass}</a>`)
                 } else {
                     users.push(`@${uss[name]}`)
                 }
@@ -92,7 +92,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
               bot.sendMessage(chatId, msg, {
                 reply_markup: { keyboard: keyboard, resize_keyboard: true, },
                 reply_to_message_id: msg.message_id,
-                parse_mode: 'Markdown'
+                parse_mode: 'HTML'
               });
             } else{
                 
