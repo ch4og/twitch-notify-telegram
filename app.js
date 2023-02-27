@@ -66,12 +66,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
         break;
       case 'Информация о подписке':
         const subs = readSubs();
-        const infoText = Object.keys(subs).includes(chatId.toString()) ? "*Вы подписаны на уведомления.*" : "*Вы не подписаны на уведомления.*";
-        sample = infoText + `\n\nПодписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим. \nВ случае ошибок пишите @${dev}`
+        const infoText = Object.keys(subs).includes(chatId.toString()) ? "<b>Вы подписаны на уведомления.</b>" : "<b>Вы не подписаны на уведомления.</b>";
+        sample = infoText + `\n\nПодписавшись на уведомления вы будете получать сообщения каждый раз когда <a href="${link}">${streamer}</a> запускает стрим. \nВ случае ошибок пишите @${dev}`
         bot.sendMessage(chatId, sample, {
             reply_markup: { keyboard },
             reply_to_message_id: msg.message_id,
-            parse_mode: 'Markdown'
+            parse_mode: 'HTML'
           }); 
           break;
       case 'sysi':
@@ -83,7 +83,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             for (let name in uss){
                 if (uss[name].includes("nooagainuserid")){
                     let ass = uss[name].replace('nooagainuserid', '')
-                    users.push(`[${ass}](tg://user?id=${ass})`)
+                    users.push(`<a href="tg://user?id=${ass}">${ass}</a>`)
                 } else {
                     users.push(`@${uss[name]}`)
                 }
@@ -92,7 +92,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
               bot.sendMessage(chatId, msg, {
                 reply_markup: { keyboard },
                 reply_to_message_id: msg.message_id,
-                parse_mode: 'Markdown'
+                parse_mode: 'HTML'
               });
             } else{
                 
@@ -130,7 +130,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
         const streamTitle = response.data.data[0].title;
         for (const irs in subs) {
           chatId = subs[irs]
-          bot.sendMessage(chatId, `*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
+          bot.sendMessage(chatId, `<b>${streamer} запустил стрим!</b>\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'HTML'});
           const username = Object.values(readSubs())[irs]
           console.log(username)
           nameee = getUname(chatId, username);
@@ -182,10 +182,10 @@ const bot = new TelegramBot(tg_api, { polling: true });
         return "@"+name
     }else{
     
-    return `[${id}](tg://user?id=${id})`
+    return `<a href="tg://user?id=${id}">${id}</a>`
 }
   }
-  const log = message => {
+  const log = message => {s
     fs.appendFileSync('msg.log', message + '\n');
   };  
 
@@ -193,7 +193,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
     setTimeout(() => {
       setInterval(() => {
         checkStreamStatus();
-      }, 1 * 1000); //60 !!!!!
+      }, 60 * 1000); //60 !!!!!
     }, 0);
   };
   runCheckStreamStatus();
