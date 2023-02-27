@@ -104,7 +104,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
       default:
         bot.sendMessage(chatId, 'Извините, я вас не понял, используйте кнопки.', {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            reply_to_message_id: msg.message_id
+            
         });
         
         uss = getUname(chatId, msg.from.username);
