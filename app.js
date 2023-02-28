@@ -6,7 +6,7 @@ require('dotenv').config();
 
 let online = true;
 const tw_cli = process.env.TW_CLIENT;
-const tw_key = process.env.TW_OAUTH;
+const tw_key = process.env.TW_SECRET;
 const streamer = process.env.STREAMER;
 const tg_api = process.env.TG_API;
 const link = process.env.LINK;
