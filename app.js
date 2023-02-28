@@ -4,7 +4,7 @@ const axios = require('axios');
 
 require('dotenv').config();
 
-let online = true;
+let online = false;
 const tw_cli = process.env.TW_CLIENT;
 const tw_key = process.env.TW_SECRET;
 const streamer = process.env.STREAMER;
@@ -109,7 +109,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             log(`sent ${nameee}`)
         }
         online = true;
-      }
+      } 
     } catch (error) {
       online = false;
     }
