@@ -4,7 +4,6 @@ const axios = require('axios');
 
 require('dotenv').config();
 
-const subscribers = require('./subscribers.json');
 let online = true;
 const tw_cli = process.env.TW_CLIENT;
 const tw_key = process.env.TW_OAUTH;
@@ -108,8 +107,6 @@ const bot = new TelegramBot(tg_api, { polling: true });
             console.log(username)
             nameee = getUname(chatId, username);
             log(`sent ${nameee}`)
-          
-
         }
         online = true;
       }
@@ -117,16 +114,10 @@ const bot = new TelegramBot(tg_api, { polling: true });
       online = false;
     }
   };
-
   
   const readSubs = () => {
     const subscribers = JSON.parse(fs.readFileSync('subscribers.json'));
     return subscribers;
-  };
-
-  const readLogs = () => {
-    const log = fs.readFileSync('msg.log');
-    return log;
   };
   
   const addToSubs = (chatId, subscriber) => {
@@ -152,12 +143,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
       return false;
     }
   };
+
   const getUname = (id, name) =>{
     if (name != undefined){
         return "@"+name
     }else{
-    
-    return `<a href="tg://user?id=${id}">${id}</a>` 
+    return `tg://user?id=${id}` 
 }
   }
   const log = message => {
