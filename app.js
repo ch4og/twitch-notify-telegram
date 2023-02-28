@@ -74,39 +74,13 @@ const bot = new TelegramBot(tg_api, { polling: true });
             parse_mode: 'Markdown'
           }); 
           break;
-      case 'sysi':
-        const sender = msg.from.username || chatId;
-        if (sender === dev){ ///
-            let users = []
-            let log = readLogs();
-            let uss = Object.values(readSubs());
-            for (let name in uss){
-                if (uss[name].includes("nooagainuserid")){
-                    let ass = uss[name].replace('nooagainuserid', '')
-                    users.push(`<a href="tg://user?id=${ass}">${ass}</a>`)
-                } else {
-                    users.push(`@${uss[name]}`)
-                }
-            }
-              msg = `online=${online}\n\nSUBS:\n${users.join(' ')}\n\nLOG:\n${log}`
-              bot.sendMessage(chatId, msg, {
-                reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-                reply_to_message_id: msg.message_id,
-                parse_mode: 'HTML'
-              });
-            } else{
-                
-                uss = getUname(chatId, msg.from.username);
-                log(`!!!${uss} - sysi`)
-            }
-            break;
 
       default:
         bot.sendMessage(chatId, 'Извините, я вас не понял, используйте кнопки.', {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
             reply_to_message_id: msg.message_id
         });
-        
+  
         uss = getUname(chatId, msg.from.username);
         log(`?${uss} - ${messageText}`) 
         break;
@@ -130,20 +104,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
         const streamTitle = response.data.data[0].title;
         for (const irs in subs) {
           chatId = subs[irs]
-          if (chatId.toString() != "1033428469"){
             bot.sendMessage(chatId, `*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
             const username = Object.values(readSubs())[irs]
             console.log(username)
             nameee = getUname(chatId, username);
-            log(`SENT TO ${nameee}`)
-          }else{
-            bot.sendMessage(chatId, `*Пиццаед за баллами!!!!*\n\n*${streamer} запустил стрим!*\n\n${streamTitle}\n\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}\nhttps://www.twitch.tv/${streamer}`, {parse_mode: 'Markdown'});
-            const username = Object.values(readSubs())[irs]
-            console.log(username)
-            nameee = getUname(chatId, username);
-            log(`SENT TO PIZZAED ${nameee}`)
+            log(`sent ${nameee}`)
           
-          }
 
         }
         online = true;
@@ -207,3 +173,4 @@ const bot = new TelegramBot(tg_api, { polling: true });
     }, 0);
   };
   runCheckStreamStatus();
+
