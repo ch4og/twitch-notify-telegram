@@ -10,7 +10,6 @@ const tw_cli = process.env.TW_CLIENT;
 const tw_key = process.env.TW_OAUTH;
 const streamer = process.env.STREAMER;
 const tg_api = process.env.TG_API;
-const dev = process.env.DEV;
 const link = process.env.LINK;
 
 
@@ -67,7 +66,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
       case 'Информация о подписке':
         const subs = readSubs();
         const infoText = Object.keys(subs).includes(chatId.toString()) ? "Вы *подписаны* на уведомления." : "Вы *не подписаны* на уведомления.";
-        sample = `Подписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.\n\n${infoText}\n\nВ случае ошибок пишите @${dev}`
+        sample = `Подписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.\n\n${infoText}`
         bot.sendMessage(chatId, sample, {
             reply_markup: { keyboard: keyboard, resize_keyboard: true, },
             reply_to_message_id: msg.message_id,
