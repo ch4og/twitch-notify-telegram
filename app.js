@@ -84,6 +84,14 @@ const bot = new TelegramBot(tg_api, { polling: true });
         break;
     }
   });
+  bot.on('polling_error', (error) => {
+	var time = new Date();
+	console.log("TIME:", time);
+	console.log("CODE:", error.code);  // => 'EFATAL'
+	console.log("MSG:", error.message);
+	console.log("STACK:", error.stack);
+  process.exit(1);
+});
 
 
 
