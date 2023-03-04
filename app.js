@@ -1,7 +1,7 @@
 const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 require('dotenv').config();
 
