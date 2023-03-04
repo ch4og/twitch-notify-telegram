@@ -62,15 +62,19 @@ const bot = new TelegramBot(tg_api, { polling: true });
               });
         }
         break;
-      case 'Информация о подписке':
-        const subs = readSubs();
-        const infoText = Object.keys(subs).includes(chatId.toString()) ? "Вы *подписаны* на уведомления." : "Вы *не подписаны* на уведомления.";
-        sample = `Подписавшись на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.\n\n${infoText}`
-        bot.sendMessage(chatId, sample, {
-            reply_markup: { keyboard: keyboard, resize_keyboard: true, },
-            reply_to_message_id: msg.message_id,
-            parse_mode: 'Markdown'
-          }); 
+          case 'Информация о подписке':
+            const subs = readSubs();
+            let messageText = '';
+            if (Object.keys(subs).includes(chatId.toString())) {
+              messageText = `Поскольку вы подписаны на уведомления, вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.`;
+            } else {
+              messageText = `Если вы подпишетесь на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.`;
+            }
+            bot.sendMessage(chatId, messageText, {
+              reply_markup: { keyboard: keyboard, resize_keyboard: true,},
+              reply_to_message_id: msg.message_id,
+              parse_mode: 'Markdown'
+            }); 
           break;
 
       default:
@@ -85,13 +89,12 @@ const bot = new TelegramBot(tg_api, { polling: true });
     }
   });
   bot.on('polling_error', (error) => {
-	var time = new Date();
-	console.log("TIME:", time);
-	console.log("CODE:", error.code);  // => 'EFATAL'
-	console.log("MSG:", error.message);
-	console.log("STACK:", error.stack);
-  process.exit(1);
-});
+    const { code, message, stack } = error; // Destructuring the error object.
+    console.error(`TIME: ${new Date()}\nCODE: ${code}\nMSG: ${message}\nSTACK: ${stack}`);
+    process.exit(1);
+  });
+
+
 
 
 
@@ -152,23 +155,22 @@ const bot = new TelegramBot(tg_api, { polling: true });
     }
   };
 
-  const getUname = (id, name) =>{
-    if (name != undefined){
-        return "@"+name
-    }else{
-    return `tg://user?id=${id}` 
-}
-  }
-  const log = message => {
-    fs.appendFileSync('msg.log', message + '\n');
-  };  
+  const getUname = (id, name) => (name ? `@${name}` : `tg://user?id=${id}`);
+
+  const log = async (message) => {
+    try {
+      await fs.promises.appendFile('msg.log', message + '\n');
+    } catch (error) {
+      console.error(error);
+    }
+  }; 
+  
 
   const runCheckStreamStatus = () => {
-    setTimeout(() => {
-      setInterval(() => {
-        checkStreamStatus();
-      }, 60 * 1000); 
-    }, 0);
+        setInterval(() => {
+          checkStreamStatus();
+        }, 60 * 1000); // Run every minute
   };
+  
   runCheckStreamStatus();
 
