@@ -68,7 +68,7 @@ const bot = new TelegramBot(tg_api, { polling: true });
             if (Object.keys(subs).includes(chatId.toString())) {
               messageText = `Поскольку вы подписаны на уведомления, вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.`;
             } else {
-              messageText = `Если вы подпишетесь на уведомления вы будете получать сообщения каждый раз когда [${streamer}](${link}) запускает стрим.`;
+              messageText = `Если вы хотите получать уведомления о cтримах [${streamer}](${link}), подпишитесь на них. В противном случае, вы не будете получать сообщения о запуске стрима`;
             }
             bot.sendMessage(chatId, messageText, {
               reply_markup: { keyboard: keyboard, resize_keyboard: true,},
