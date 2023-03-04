@@ -1,16 +1,25 @@
 const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
+const fetch = require('node-fetch');
 
 require('dotenv').config();
 
 let online = false;
 const tw_cli = process.env.TW_CLIENT;
-const tw_key = process.env.TW_SECRET;
+const clientSecret = process.env.TW_SECRET;
 const streamer = process.env.STREAMER;
 const tg_api = process.env.TG_API;
 const link = process.env.LINK;
+let tw_key;
 
+getAccessToken(tw_cli, clientSecret)
+  .then(token => {
+    tw_key = token;
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
 const keyboard = [
     ['Подписаться на уведомления', 'Отписаться от уведомлений'],
@@ -165,7 +174,28 @@ const bot = new TelegramBot(tg_api, { polling: true });
     }
   }; 
   
-
+  async function getAccessToken(clientId, clientSecret) {
+    const url = 'https://id.twitch.tv/oauth2/token';
+    const data = {
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: 'client_credentials'
+    };
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: new URLSearchParams(data)
+      });
+      
+      const result = await response.json();
+      return result.access_token;
+  
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
   const runCheckStreamStatus = () => {
         setInterval(() => {
           checkStreamStatus();
