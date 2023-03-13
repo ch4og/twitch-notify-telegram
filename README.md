@@ -17,7 +17,7 @@ echo "{}" > subscribers.json
 
 #### Отредактировать .env 
 
-- ```TW_SECRET``` 
+- ```TW_SECRET``` На самом деле это токен (https://twitchtokengenerator.com/)
 - ```TW_CLIENT```
 - ```STREAMER```
 - ```TG_API```
