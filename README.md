@@ -7,9 +7,7 @@
 
 
 Переменные в .env
-1. TW_OAUTH
+1. TW_TOKEN
 2. TW_CLIENT
 3. STREAMER
 4. TG_API
-5. DEV
-6. LINK
