@@ -7,6 +7,8 @@
 1. [Создать приложение Twitch Application](https://dev.twitch.tv/console/apps/create)
 2. [Создать бота через BotFather в Telegram](https://telegram.me/BotFather)
 3. ```pip install telebot python_dotenv```
+4. ```touch msg.log```
+5. ```echo '{}' > subscribers.json```
 
 Переменные в .env
 1. TW_TOKEN
