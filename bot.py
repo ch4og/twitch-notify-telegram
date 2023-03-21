@@ -27,6 +27,11 @@ keyboard.add(button_subscribe, button_unsubscribe)
 # Add the third button to the row below
 keyboard.add(button_info)
 
+# keyboard = [
+#    ['Подписаться на уведомления', 'Отписаться от уведомлений'],
+#    ['Информация о подписке']
+#  ];
+
 @bot.message_handler(commands = ['start'])
 def start(message):
     bot.reply_to(message, f'Привет!\nЭто бот для уведомлений о стримах на канале {os.getenv("STREAMER")}!', reply_markup=keyboard)
