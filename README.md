@@ -1,4 +1,4 @@
-# twitch-notify-telegram-legacy
+# twitch-notify-telegram
 ## Новая версия бота на Python
 #### Telegram бот на Python для уведомления зрителей о начавшемся стриме на Twitch. 
 
